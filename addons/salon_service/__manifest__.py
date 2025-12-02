@@ -7,7 +7,10 @@
     "data": [
         "security/ir.model.access.csv",
         "data/service_sequence.xml",
-        "views/salon_service_view.xml",
+        "views/salon_service_tree_view.xml",
+        "views/salon_service_search_view.xml",
+        "views/salon_service_form_view.xml",
+        "views/salon_service_menu.xml",
     ],
     "installable": True,
     "application": False,

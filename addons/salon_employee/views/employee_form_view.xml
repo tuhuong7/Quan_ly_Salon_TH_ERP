@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_employee_form" model="ir.ui.view">
+        <field name="name">salon.employee.form</field>
+        <field name="model">salon.employee</field>
+        <field name="arch" type="xml">
+            <form string="Nhân viên">
+                <sheet>
+                    <group string="Thông tin nhân viên">
+                        <group>
+                            <field name="ma_nv" readonly="1"/>
+                            <field name="ten_nv" required="1"/>
+                            <field name="gioi_tinh" widget="radio"/>
+                            <field name="chuc_vu" required="1"/>
+                            <field name="sdt" required="1"/>
+                            <field name="ngay_sinh"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
+

@@ -7,7 +7,10 @@
     "data": [
         "security/ir.model.access.csv",
         "data/promotion_sequence.xml",
-        "views/promotion_views.xml",
+        "views/promotion_tree_view.xml",
+        "views/promotion_search_view.xml",
+        "views/promotion_form_view.xml",
+        "views/promotion_menu.xml",
     ],
     "installable": True,
     "application": False,

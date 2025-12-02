@@ -7,7 +7,11 @@
     "data": [
         "security/ir.model.access.csv",
         "data/appointment_sequence.xml",
-        "views/salon_appointment_view.xml",
+        "views/salon_appointment_tree_view.xml",
+        "views/salon_appointment_search_view.xml",
+        "views/salon_appointment_kanban_view.xml",
+        "views/salon_appointment_form_view.xml",
+        "views/salon_appointment_menu.xml",
         "views/appointment_cancel_wizard_view.xml",
     ],
     "installable": True,

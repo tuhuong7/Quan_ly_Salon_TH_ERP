@@ -7,7 +7,10 @@
     "data": [
         "security/ir.model.access.csv",
         "data/employee_sequence.xml",
-        "views/employee_views.xml",
+        "views/employee_tree_view.xml",
+        "views/employee_search_view.xml",
+        "views/employee_form_view.xml",
+        "views/employee_menu.xml",
         "views/employee_kanban_view.xml",
         "views/shift_views.xml",
     ],

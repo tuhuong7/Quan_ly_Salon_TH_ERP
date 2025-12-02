@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_membership_rank_search" model="ir.ui.view">
+        <field name="name">salon.membership.rank.search</field>
+        <field name="model">salon.membership.rank</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm hạng thành viên">
+                <field name="name" string="Tên hạng"/>
+                <field name="code" string="Mã hạng"/>
+                <filter string="Hoạt động" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Không hoạt động" name="inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+</odoo>
+

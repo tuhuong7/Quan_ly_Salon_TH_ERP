@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_employee_search" model="ir.ui.view">
+        <field name="name">salon.employee.search</field>
+        <field name="model">salon.employee</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm Nhân viên">
+                <field name="ten_nv" string="Tên"/>
+                <field name="chuc_vu" string="Chức vụ"/>
+                <filter string="Nam" name="filter_nam" domain="[('gioi_tinh','=','nam')]"/>
+                <filter string="Nữ" name="filter_nu" domain="[('gioi_tinh','=','nu')]"/>
+            </search>
+        </field>
+    </record>
+</odoo>
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_salon_appointment_search" model="ir.ui.view">
+        <field name="name">salon.appointment.search</field>
+        <field name="model">salon.appointment</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm lịch hẹn">
+                <field name="code" string="Mã lịch hẹn"/>
+                <field name="customer_id" string="Khách hàng"/>
+                <field name="phone" string="Số điện thoại"/>
+                <field name="employee_id" string="Nhân viên"/>
+                <separator/>
+                <filter string="Đang chờ" name="pending" domain="[('state','=','pending')]"/>
+                <filter string="Đã xác nhận" name="confirmed" domain="[('state','=','confirmed')]"/>
+                <filter string="Đang thực hiện" name="processing" domain="[('state','=','processing')]"/>
+                <filter string="Đã hoàn thành" name="done" domain="[('state','=','done')]"/>
+                <filter string="Đã hủy" name="cancel" domain="[('state','=','cancel')]"/>
+            </search>
+        </field>
+    </record>
+</odoo>
+

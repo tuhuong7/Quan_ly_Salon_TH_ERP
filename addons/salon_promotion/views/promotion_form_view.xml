@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_promotion_form" model="ir.ui.view">
+        <field name="name">salon.promotion.form</field>
+        <field name="model">salon.promotion</field>
+        <field name="arch" type="xml">
+            <form string="Khuyến mãi">
+                <header>
+                    <button name="action_activate" string="Kích hoạt" type="object"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_cancel" string="Hủy" type="object"
+                            class="btn-danger" invisible="state == 'cancelled'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,expired"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="code" readonly="1" required="0"/>
+                            <field name="name" required="1"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="min_amount" widget="monetary" options="{'decimal_places': 0}"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="discount_type"/>
+                            <field name="discount_value"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Mô tả về khuyến mãi..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
+

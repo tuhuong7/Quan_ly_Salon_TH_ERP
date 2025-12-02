@@ -81,7 +81,10 @@ addons/
 │   └── views/
 │       ├── assets.xml
 │       ├── employee_kanban_view.xml
-│       ├── employee_views.xml
+│       ├── employee_form_view.xml
+│       ├── employee_tree_view.xml
+│       ├── employee_search_view.xml
+│       ├── employee_menu.xml
 │       └── shift_views.xml
 │
 ├── salon_service/                 # Module quản lý dịch vụ
@@ -95,7 +98,10 @@ addons/
 │   ├── security/
 │   │   └── ir.model.access.csv
 │   └── views/
-│       └── salon_service_view.xml
+│       ├── salon_service_form_view.xml
+│       ├── salon_service_tree_view.xml
+│       ├── salon_service_search_view.xml
+│       └── salon_service_menu.xml
 │
 ├── salon_appointment/             # Module quản lý lịch hẹn
 │   ├── __init__.py
@@ -111,7 +117,11 @@ addons/
 │   │   └── ir.model.access.csv
 │   └── views/
 │       ├── appointment_cancel_wizard_view.xml
-│       └── salon_appointment_view.xml
+│       ├── salon_appointment_form_view.xml
+│       ├── salon_appointment_tree_view.xml
+│       ├── salon_appointment_search_view.xml
+│       ├── salon_appointment_kanban_view.xml
+│       └── salon_appointment_menu.xml
 │
 ├── salon_membership_rank/         # Module quản lý hạng thành viên
 │   ├── __init__.py
@@ -124,7 +134,10 @@ addons/
 │   ├── security/
 │   │   └── ir.model.access.csv
 │   └── views/
-│       └── membership_rank_views.xml
+│       ├── membership_rank_form_view.xml
+│       ├── membership_rank_tree_view.xml
+│       ├── membership_rank_search_view.xml
+│       └── membership_rank_menu.xml
 │
 ├── salon_promotion/               # Module quản lý khuyến mãi
 │   ├── __init__.py
@@ -137,7 +150,10 @@ addons/
 │   ├── security/
 │   │   └── ir.model.access.csv
 │   └── views/
-│       └── promotion_views.xml
+│       ├── promotion_form_view.xml
+│       ├── promotion_tree_view.xml
+│       ├── promotion_search_view.xml
+│       └── promotion_menu.xml
 │
 └── salon_service_history/         # Module lịch sử dịch vụ
     ├── __init__.py
@@ -148,8 +164,10 @@ addons/
     ├── security/
     │   └── ir.model.access.csv
     └── views/
-        ├── service_history_menu.xml
-        └── service_history_views.xml
+        ├── service_history_form_view.xml
+        ├── service_history_tree_view.xml
+        ├── service_history_search_view.xml
+        └── service_history_menu.xml
 ```
 
 ## 🚀 Cài đặt & Chạy

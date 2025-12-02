@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_salon_appointment" model="ir.actions.act_window">
+        <field name="name">Lịch Hẹn Salon</field>
+        <field name="res_model">salon.appointment</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_salon_appointment_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo lịch hẹn mới cho khách hàng của bạn.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_salon_appointment"
+            name="Lịch Hẹn"
+            parent="salon_management.menu_salon_root"
+            action="action_salon_appointment"
+            sequence="2"/>
+            
+    <record id="action_update_appointment_codes" model="ir.actions.server">
+        <field name="name">Cập nhật mã lịch hẹn</field>
+        <field name="model_id" ref="model_salon_appointment"/>
+        <field name="binding_model_id" ref="model_salon_appointment"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+appointments = env['salon.appointment'].search([('code', '=', 'New')])
+if appointments:
+    for appointment in appointments:
+        sequence = env['ir.sequence'].next_by_code('salon.appointment.sequence') or 'New'
+        appointment.write({'code': sequence})
+        </field>
+    </record>
+</odoo>
+

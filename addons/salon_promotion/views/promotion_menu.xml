@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_promotion" model="ir.actions.act_window">
+        <field name="name">Khuyến mãi</field>
+        <field name="res_model">salon.promotion</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_promotion_search"/>
+    </record>
+
+    <menuitem id="menu_promotion_root" 
+              name="Khuyến mãi" 
+              parent="salon_management.menu_salon_root" 
+              action="action_promotion"
+              sequence="9"/>
+</odoo>
+

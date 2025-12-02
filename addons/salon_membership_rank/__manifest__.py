@@ -7,7 +7,10 @@
     "data": [
         "security/ir.model.access.csv",
         "data/membership_rank_sequence.xml",
-        "views/membership_rank_views.xml",
+        "views/membership_rank_tree_view.xml",
+        "views/membership_rank_search_view.xml",
+        "views/membership_rank_form_view.xml",
+        "views/membership_rank_menu.xml",
     ],
     "installable": True,
     "application": False,

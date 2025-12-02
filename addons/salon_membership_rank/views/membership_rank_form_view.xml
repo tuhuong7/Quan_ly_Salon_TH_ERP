@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_membership_rank_form" model="ir.ui.view">
+        <field name="name">salon.membership.rank.form</field>
+        <field name="model">salon.membership.rank</field>
+        <field name="arch" type="xml">
+            <form string="Hạng thành viên">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="code" readonly="1"/>
+                            <field name="name" required="1"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="min_total_spent" widget="monetary" options="{'decimal_places': 0}"/>
+                            <field name="min_visit_count"/>
+                            <field name="discount_percentage"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Mô tả về hạng thành viên..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
+

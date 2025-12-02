@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="view_salon_service_history_search" model="ir.ui.view">
+    <field name="name">salon.service.history.search</field>
+    <field name="model">salon.service.history</field>
+    <field name="arch" type="xml">
+      <search string="Tìm kiếm lịch sử dịch vụ">
+        <field name="customer_id" string="Khách hàng"/>
+        <field name="service_id" string="Dịch vụ"/>
+        <field name="staff_id" string="Nhân viên"/>
+        <field name="date" string="Ngày thực hiện"/>
+        <separator/>
+        <filter string="Nhóm theo Ngày" name="group_by_date" context="{'group_by': 'date:day'}"/>
+        <filter string="Nhóm theo Tháng" name="group_by_month" context="{'group_by': 'date:month'}"/>
+        <filter string="Nhóm theo Năm" name="group_by_year" context="{'group_by': 'date:year'}"/>
+        <filter string="Nhóm theo Khách hàng" name="group_by_customer" context="{'group_by': 'customer_id'}"/>
+        <filter string="Nhóm theo Dịch vụ" name="group_by_service" context="{'group_by': 'service_id'}"/>
+        <filter string="Nhóm theo Nhân viên" name="group_by_staff" context="{'group_by': 'staff_id'}"/>
+      </search>
+    </field>
+  </record>
+</odoo>
+
