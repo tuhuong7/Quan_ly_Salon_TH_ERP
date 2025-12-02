@@ -275,12 +275,6 @@ Các module phải được cài đặt theo thứ tự sau để đảm bảo d
 
 ## 🔧 Cấu hình
 
-### Database
-
-File `odoo.conf` sử dụng đường dẫn tương đối:
-- `data_dir = ./filestore` - Thư mục lưu trữ file
-- `screenshots = ./screenshots` - Thư mục lưu screenshots
-
 ### Dependencies
 
 Các module salon phụ thuộc vào:
