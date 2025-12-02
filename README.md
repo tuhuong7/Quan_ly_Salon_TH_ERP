@@ -6,17 +6,6 @@ Hệ thống quản lý Salon được phát triển trên nền tảng Odoo 19.
 
 *Lê Nguyễn Ngọc Tú Hương,...*
 
-## 📋 Danh sách Module
-
-- **salon_management**: Module quản lý Salon - Menu gốc
-- **salon_tc_invoice_extend**: Module quản lý hóa đơn và thanh toán
-- **salon_customer**: Module quản lý khách hàng
-- **salon_employee**: Module quản lý nhân viên
-- **salon_service**: Module quản lý dịch vụ
-- **salon_appointment**: Module quản lý lịch hẹn
-- **salon_membership_rank**: Module quản lý hạng thành viên
-- **salon_promotion**: Module quản lý khuyến mãi
-- **salon_service_history**: Module lịch sử dịch vụ
 
 ## 📁 Cấu trúc Thư mục Dự án
 
