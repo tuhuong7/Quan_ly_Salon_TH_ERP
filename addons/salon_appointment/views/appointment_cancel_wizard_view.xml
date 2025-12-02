@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_appointment_cancel_wizard_form" model="ir.ui.view">
+        <field name="name">salon.appointment.cancel.wizard.form</field>
+        <field name="model">salon.appointment.cancel.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Hủy lịch hẹn">
+                <sheet>
+                    <group>
+                        <field name="appointment_id" readonly="1"/>
+                        <field name="cancel_reason" placeholder="Vui lòng nhập lý do hủy lịch hẹn..." required="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_confirm_cancel" string="Xác nhận hủy" type="object"
+                            class="btn-danger"/>
+                    <button string="Hủy" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
+

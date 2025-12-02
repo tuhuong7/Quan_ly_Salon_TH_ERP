@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_salon_invoice_user,salon.invoice.user,salon_tc_invoice_extend.model_salon_invoice,base.group_user,1,1,1,0
+access_salon_invoice_manager,salon.invoice.manager,salon_tc_invoice_extend.model_salon_invoice,base.group_erp_manager,1,1,1,1
+access_salon_invoice_line_user,salon.invoice.line.user,salon_tc_invoice_extend.model_salon_invoice_line,base.group_user,1,0,0,0
+access_salon_invoice_line_manager,salon.invoice.line.manager,salon_tc_invoice_extend.model_salon_invoice_line,base.group_erp_manager,1,1,1,1
+access_payment_confirm_wizard_user,salon.payment.confirm.wizard.user,salon_tc_invoice_extend.model_salon_payment_confirm_wizard,base.group_user,1,1,1,1
+access_payment_confirm_wizard_line_user,salon.payment.confirm.wizard.line.user,salon_tc_invoice_extend.model_salon_payment_confirm_wizard_line,base.group_user,1,1,1,1

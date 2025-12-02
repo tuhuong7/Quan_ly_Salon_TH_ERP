@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_salon_membership_rank_user,salon.membership.rank.user,salon_membership_rank.model_salon_membership_rank,base.group_user,1,0,0,0
+access_salon_membership_rank_manager,salon.membership.rank.manager,salon_membership_rank.model_salon_membership_rank,base.group_erp_manager,1,1,1,1
+

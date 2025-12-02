@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_salon_service_list" model="ir.actions.act_window">
+        <field name="name">Danh sách dịch vụ</field>
+        <field name="res_model">salon.service</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_salon_service_list"
+              name="Dịch vụ"
+              parent="salon_management.menu_salon_root"
+              action="action_salon_service_list"
+              sequence="5"/>
+
+    <record id="view_salon_service_list" model="ir.ui.view">
+        <field name="name">salon.service.list</field>
+        <field name="model">salon.service</field>
+        <field name="arch" type="xml">
+            <list string="Danh sách dịch vụ">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="service_type"/>
+                <field name="duration"/>
+                <field name="price"/>
+                <field name="status"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_salon_service_form" model="ir.ui.view">
+        <field name="name">salon.service.form</field>
+        <field name="model">salon.service</field>
+        <field name="arch" type="xml">
+            <form string="Chi tiết dịch vụ">
+                <sheet>
+                    <group>
+                        <field name="code" readonly="1" required="0"/>
+                        <field name="name"/>
+                        <field name="service_type"/>
+                        <field name="duration"/>
+                        <field name="price"/>
+                        <field name="status"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_salon_service_search" model="ir.ui.view">
+        <field name="name">salon.service.search</field>
+        <field name="model">salon.service</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm dịch vụ">
+                <field name="name" string="Tên dịch vụ"/>
+                <field name="service_type" string="Loại dịch vụ"/>
+                <field name="status" string="Trạng thái"/>
+
+                <filter name="active" string="Đang hoạt động" domain="[('status','=','active')]"/>
+                <filter name="inactive" string="Ngưng hoạt động" domain="[('status','=','inactive')]"/>
+            </search>
+        </field>
+    </record>
+</odoo>

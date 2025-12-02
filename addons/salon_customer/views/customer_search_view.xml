@@ -1,0 +1,15 @@
+<odoo>
+  <record id="view_salon_customer_search" model="ir.ui.view">
+    <field name="name">salon.customer.search</field>
+    <field name="model">salon.customer</field>
+    <field name="arch" type="xml">
+      <search string="Tìm kiếm khách hàng theo tên, email, số điện thoại hoặc hạng thành viên...">
+        <field name="name"/>
+        <field name="email"/>
+        <field name="phone"/>
+        <field name="membership_rank_id" string="Hạng thành viên"/>
+      </search>
+    </field>
+  </record>
+</odoo>
+

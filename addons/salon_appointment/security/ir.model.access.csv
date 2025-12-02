@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_salon_appointment_user,salon.appointment.user,salon_appointment.model_salon_appointment,base.group_user,1,1,1,0
+access_salon_appointment_manager,salon.appointment.manager,salon_appointment.model_salon_appointment,base.group_erp_manager,1,1,1,1
+access_salon_appointment_cancel_wizard_user,salon.appointment.cancel.wizard.user,salon_appointment.model_salon_appointment_cancel_wizard,base.group_user,1,1,1,1
+access_salon_appointment_service_user,salon.appointment.service.user,salon_appointment.model_salon_appointment_service,base.group_user,1,1,1,1
+access_salon_appointment_service_manager,salon.appointment.service.manager,salon_appointment.model_salon_appointment_service,base.group_erp_manager,1,1,1,1

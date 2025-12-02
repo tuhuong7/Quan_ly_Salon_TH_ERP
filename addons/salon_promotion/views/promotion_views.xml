@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_promotion_form" model="ir.ui.view">
+        <field name="name">salon.promotion.form</field>
+        <field name="model">salon.promotion</field>
+        <field name="arch" type="xml">
+            <form string="Khuyến mãi">
+                <header>
+                    <button name="action_activate" string="Kích hoạt" type="object"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_cancel" string="Hủy" type="object"
+                            class="btn-danger" invisible="state == 'cancelled'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,expired"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="code" readonly="1" required="0"/>
+                            <field name="name" required="1"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="min_amount" widget="monetary" options="{'decimal_places': 0}"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="discount_type"/>
+                            <field name="discount_value"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Mô tả về khuyến mãi..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_promotion_tree" model="ir.ui.view">
+        <field name="name">salon.promotion.tree</field>
+        <field name="model">salon.promotion</field>
+        <field name="arch" type="xml">
+            <list string="Danh sách khuyến mãi" default_order="date_start desc">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="discount_type"/>
+                <field name="discount_value"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-muted="state == 'expired'"
+                       decoration-danger="state == 'cancelled'"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_promotion_search" model="ir.ui.view">
+        <field name="name">salon.promotion.search</field>
+        <field name="model">salon.promotion</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm khuyến mãi">
+                <field name="name" string="Tên khuyến mãi"/>
+                <field name="code" string="Mã khuyến mãi"/>
+                <separator/>
+                <filter string="Đang áp dụng" name="active" domain="[('state', '=', 'active')]"/>
+                <filter string="Hết hạn" name="expired" domain="[('state', '=', 'expired')]"/>
+                <filter string="Nháp" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Đã hủy" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_promotion" model="ir.actions.act_window">
+        <field name="name">Khuyến mãi</field>
+        <field name="res_model">salon.promotion</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="search_view_id" ref="view_promotion_search"/>
+    </record>
+
+    <menuitem id="menu_promotion_root" 
+              name="Khuyến mãi" 
+              parent="salon_management.menu_salon_root" 
+              action="action_promotion"
+              sequence="9"/>
+</odoo>
+

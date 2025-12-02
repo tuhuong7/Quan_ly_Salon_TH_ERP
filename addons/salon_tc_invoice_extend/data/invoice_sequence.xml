@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_salon_invoice" model="ir.sequence">
+            <field name="name">Mã hóa đơn Salon</field>
+            <field name="code">salon.invoice</field>
+            <field name="prefix">HD</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
+</odoo>
+

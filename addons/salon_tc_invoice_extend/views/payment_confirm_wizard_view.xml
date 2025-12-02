@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_payment_confirm_wizard_form" model="ir.ui.view">
+        <field name="name">salon.payment.confirm.wizard.form</field>
+        <field name="model">salon.payment.confirm.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Xác nhận thanh toán">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="invoice_id" readonly="1" nolabel="1"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group>
+                            <field name="customer_id" readonly="1"/>
+                            <field name="payment_method" readonly="1"/>
+                            <field name="total_amount" widget="monetary" options="{'decimal_places': 0}" readonly="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Thông tin chuyển khoản" invisible="payment_method not in ['bank', 'mixed']">
+                        <group>
+                            <label for="config_bank_account_name" string="Thông tin tài khoản Salon"/>
+                            <div>
+                                <p><strong>Tên chủ tài khoản:</strong> <field name="config_bank_account_name" nolabel="1" readonly="1"/></p>
+                                <p><strong>Số tài khoản:</strong> <field name="config_bank_account_number" nolabel="1" readonly="1"/></p>
+                                <p><strong>Ngân hàng:</strong> <field name="config_bank_name" nolabel="1" readonly="1"/></p>
+                            </div>
+                        </group>
+                    </group>
+                    
+                    <group string="Chi tiết dịch vụ">
+                        <field name="line_ids" readonly="1">
+                            <list>
+                                <field name="service_id"/>
+                                <field name="quantity"/>
+                                <field name="price_unit" widget="monetary" options="{'decimal_places': 0}"/>
+                                <field name="currency_id" invisible="1" column_invisible="1"/>
+                                <field name="promotion_id" optional="show"/>
+                                <field name="line_promotion_discount_amount" widget="monetary" options="{'decimal_places': 0}" optional="show"/>
+                                <field name="subtotal" widget="monetary" options="{'decimal_places': 0}" sum="Tổng"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_confirm_payment" string="Xác nhận thanh toán" type="object" class="btn-primary"/>
+                    <button string="Hủy" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_payment_confirm_wizard" model="ir.actions.act_window">
+        <field name="name">Xác nhận thanh toán</field>
+        <field name="res_model">salon.payment.confirm.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
+
