@@ -157,57 +157,38 @@ addons/
 
 ### Yêu cầu Hệ thống
 
+- **Odoo 19.0**: Đã được cài đặt và cấu hình sẵn
 - **Python**: 3.10 hoặc cao hơn
 - **PostgreSQL**: 12 hoặc cao hơn
 - **Git**: Để clone repository
-- **pip**: Để cài đặt dependencies
 
-### Bước 1: Clone Odoo 19.0
+### Bước 1: Tải Salon Modules về thư mục Addons
 
-Clone Odoo 19.0 chính thức từ GitHub:
-
-```bash
-git clone https://github.com/odoo/odoo.git --branch 19.0 --depth 1 odoo-19.0
-cd odoo-19.0
-```
-
-### Bước 2: Clone Salon Modules
-
-Clone repository salon modules và di chuyển vào thư mục `addons/`:
+Di chuyển vào thư mục `addons/` của Odoo và clone repository salon modules:
 
 **Trên Linux/Mac:**
 ```bash
-cd addons
+cd /đường/dẫn/đến/odoo-19.0/addons
 git clone https://github.com/tuhuong7/Quan_ly_Salon_TH_ERP.git temp_salon
 mv temp_salon/addons/salon_* .
 rm -rf temp_salon
-cd ..
 ```
 
 **Trên Windows (PowerShell):**
 ```powershell
-cd addons
+cd C:\đường\dẫn\đến\odoo-19.0\addons
 git clone https://github.com/tuhuong7/Quan_ly_Salon_TH_ERP.git temp_salon
 Move-Item temp_salon\addons\salon_* .
 Remove-Item -Recurse -Force temp_salon
-cd ..
 ```
 
-### Bước 3: Cài đặt Dependencies
+**Lưu ý**: Thay `/đường/dẫn/đến/odoo-19.0/addons` hoặc `C:\đường\dẫn\đến\odoo-19.0\addons` bằng đường dẫn thực tế đến thư mục `addons/` của Odoo trên máy bạn.
 
-Cài đặt các thư viện Python cần thiết từ Odoo chính thức:
-
-```bash
-pip install -r requirements.txt
-```
-
-**Lưu ý**: File `requirements.txt` nằm trong thư mục Odoo chính thức (đã clone ở Bước 1), không có trong repository salon modules.
-
-### Bước 4: Cấu hình Odoo
+### Bước 2: Cấu hình Odoo
 
 Tạo file `odoo.conf` trong thư mục gốc của Odoo (xem hướng dẫn trên YouTube)
 
-### Bước 5: Khởi động Odoo Server
+### Bước 3: Khởi động Odoo Server
 
 Chạy lệnh sau để khởi động Odoo:
 
@@ -217,7 +198,7 @@ python odoo-bin -c odoo.conf
 
 **Lưu ý**: Giữ terminal/command prompt này mở để Odoo tiếp tục chạy.
 
-### Bước 6: Tạo Database PostgreSQL
+### Bước 4: Tạo Database PostgreSQL
 
 Sau khi Odoo đã khởi động, tạo database qua giao diện web:
 
@@ -236,7 +217,7 @@ Sau khi Odoo đã khởi động, tạo database qua giao diện web:
    - Thiết lập cấu hình cơ bản
    - Chuyển đến trang đăng nhập
 
-### Bước 7: Cài đặt Modules Salon
+### Bước 5: Cài đặt Modules Salon
 
 Sau khi đã tạo database và đăng nhập vào Odoo:
 
@@ -253,7 +234,7 @@ Sau khi đã tạo database và đăng nhập vào Odoo:
    - `salon_appointment`
    - `salon_tc_invoice_extend`
 
-### Bước 8: Upgrade Modules (Nếu cần)
+### Bước 6: Upgrade Modules (Nếu cần)
 
 Nếu có thay đổi code, upgrade modules:
 
