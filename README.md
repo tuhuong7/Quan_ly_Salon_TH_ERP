@@ -137,7 +137,6 @@ addons/
 │   ├── security/
 │   │   └── ir.model.access.csv
 │   └── views/
-│       ├── promotion_kanban_view.xml
 │       └── promotion_views.xml
 │
 └── salon_service_history/         # Module lịch sử dịch vụ

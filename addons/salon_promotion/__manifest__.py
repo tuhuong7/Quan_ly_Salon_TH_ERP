@@ -8,7 +8,6 @@
         "security/ir.model.access.csv",
         "data/promotion_sequence.xml",
         "views/promotion_views.xml",
-        "views/promotion_kanban_view.xml",
     ],
     "installable": True,
     "application": False,
