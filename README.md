@@ -1,10 +1,10 @@
-# Hệ thống Quản lý Salon - Odoo 19.0
+# Hệ thống Quản lý Đặt lịch Salon - Odoo 19.0
 
 Hệ thống quản lý Salon được phát triển trên nền tảng Odoo 19.0, bao gồm các module quản lý khách hàng, nhân viên, dịch vụ, lịch hẹn, hóa đơn và thanh toán.
 
 ## 👤 Tác giả
 
-*Lê Nguyễn Ngọc Tú Hương,...*
+*Lê Nguyễn Ngọc Tú Hương, Trần Thị Khánh Linh, Đoàn Như Thủy, Phạm Thị Hiền Thương, Đinh Thị Hoài Thương*
 
 
 ## 📁 Cấu trúc Thư mục Dự án
@@ -222,7 +222,7 @@ Sau khi Odoo đã khởi động, tạo database qua giao diện web:
 1. Mở trình duyệt và truy cập: `http://localhost:8069`
 2. Odoo sẽ hiển thị màn hình tạo database
 3. Điền thông tin:
-   - **Database Name**: `tạo tên database của bạn`
+   - **Database Name**: `tạo tên database`
    - **Email**: Email của bạn
    - **Password**: Mật khẩu admin (dùng để đăng nhập Odoo)
    - **Language**: Tiếng Việt (hoặc ngôn ngữ bạn muốn)
@@ -256,7 +256,7 @@ Sau khi đã tạo database và đăng nhập vào Odoo:
 Nếu có thay đổi code, upgrade modules:
 
 ```bash
-python odoo-bin -c odoo.conf -d db-t7-salon -u salon_management,salon_membership_rank,salon_service_history,salon_promotion,salon_service,salon_customer,salon_employee,salon_appointment,salon_tc_invoice_extend --stop-after-init
+python odoo-bin -c odoo.conf -d <tên db đã tạo ở trên> -u salon_management,salon_membership_rank,salon_service_history,salon_promotion,salon_service,salon_customer,salon_employee,salon_appointment,salon_tc_invoice_extend --stop-after-init
 ```
 
 ## 📦 Thứ tự Cài đặt Module
