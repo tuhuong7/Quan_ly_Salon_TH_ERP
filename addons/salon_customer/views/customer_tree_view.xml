@@ -1,0 +1,50 @@
+<odoo>
+  <record id="view_salon_customer_tree" model="ir.ui.view">
+    <field name="name">salon.customer.tree</field>
+    <field name="model">salon.customer</field>
+    <field name="arch" type="xml">
+      <list string="Danh sách khách hàng" default_order="create_date desc" 
+            decoration-success="membership_rank_id.name == 'VIP'"
+            decoration-info="membership_rank_id.name in ['Vàng', 'Bạch Kim']"
+            decoration-warning="membership_rank_id.name == 'Bạc'"
+            class="o_salon_customer_list">
+        <!-- Cột cơ bản -->
+        <field name="code" string="Mã KH" optional="show" 
+              decoration-muted="code == 'New'"/>
+        <field name="name" string="Họ và tên" optional="show" 
+              class="o_salon_customer_name"/>
+        <field name="phone" string="Số điện thoại" widget="phone" optional="show"/>
+        <field name="membership_rank_id" string="Hạng" optional="show"
+              widget="badge"
+              decoration-success="membership_rank_id.name == 'VIP'"
+              decoration-info="membership_rank_id.name in ['Vàng', 'Bạch Kim']"
+              decoration-warning="membership_rank_id.name == 'Bạc'"
+              decoration-muted="membership_rank_id.name == 'Đồng'"/>
+        <field name="visit_count" string="Số lần ghé" sum="Tổng lượt ghé" 
+              optional="show" widget="integer"/>
+
+        <!-- Ẩn header Currency nhưng vẫn render monetary đúng tiền tệ -->
+        <field name="currency_id" invisible="1" column_invisible="1" optional="hide"/>
+
+        <field name="total_spent"
+              string="Tổng chi tiêu"
+              widget="monetary"
+              options="{'currency_field': 'currency_id', 'decimal_places': 0}"
+              sum="Tổng chi tiêu"
+              optional="show"
+              decoration-success="total_spent >= 20000000"
+              decoration-info="total_spent >= 10000000"
+              decoration-warning="total_spent >= 5000000"/>
+
+        <!-- Cột thao tác (ở cuối hàng) -->
+        <button name="action_open_form_edit"
+                type="object" string="Sửa" class="btn-primary" icon="fa-pencil"/>
+        <button name="action_open_service_history"
+                type="object" string="Lịch sử" class="btn-secondary" icon="fa-history"/>
+        <button name="action_delete_record"
+                type="object" string="Xóa" class="btn-danger" icon="fa-trash"/>
+      </list>
+    </field>
+  </record>
+</odoo>
+

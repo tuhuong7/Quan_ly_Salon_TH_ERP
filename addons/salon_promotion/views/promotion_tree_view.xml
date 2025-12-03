@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_promotion_tree" model="ir.ui.view">
+        <field name="name">salon.promotion.tree</field>
+        <field name="model">salon.promotion</field>
+        <field name="arch" type="xml">
+            <list string="Danh sách khuyến mãi" default_order="date_start desc">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="discount_type"/>
+                <field name="discount_value"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-muted="state == 'expired'"
+                       decoration-danger="state == 'cancelled'"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+</odoo>
+

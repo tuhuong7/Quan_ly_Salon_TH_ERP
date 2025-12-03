@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Kanban View cho Khách hàng -->
+    <record id="view_customer_kanban" model="ir.ui.view">
+        <field name="name">salon.customer.kanban</field>
+        <field name="model">salon.customer</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="membership_rank_id" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="membership_rank_id"/>
+                <field name="total_spent"/>
+                <field name="visit_count"/>
+                <field name="service_history_count"/>
+                <field name="currency_id"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <div class="oe_kanban_avatar">
+                                    <i class="fa fa-user fa-3x text-primary"/>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                        <div class="o_kanban_record_subtitle text-muted">
+                                            <field name="code"/>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_record_top_right">
+                                        <field name="membership_rank_id" widget="badge"
+                                               decoration-success="membership_rank_id.name == 'VIP'"
+                                               decoration-info="membership_rank_id.name in ['Vàng', 'Bạch Kim']"
+                                               decoration-warning="membership_rank_id.name == 'Bạc'"
+                                               decoration-muted="membership_rank_id.name == 'Đồng'"/>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <i class="fa fa-phone"/> <field name="phone"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <i class="fa fa-envelope"/> <field name="email"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-6">
+                                            <i class="fa fa-money"/> 
+                                            <field name="total_spent" widget="monetary" options="{'decimal_places': 0}"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <i class="fa fa-calendar-check-o"/> 
+                                            <field name="visit_count"/> lượt
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-12">
+                                            <i class="fa fa-history"/> 
+                                            <field name="service_history_count"/> dịch vụ
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>
+

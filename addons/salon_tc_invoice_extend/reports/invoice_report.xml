@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_salon_invoice">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="text-center mb-4">
+                                <t t-set="company" t-value="env.company"/>
+                                <t t-if="company.logo">
+                                    <img t-attf-src="data:image/png;base64,{{company.logo}}" style="max-height: 80px; margin-bottom: 10px;"/>
+                                </t>
+                                <h2>HÓA ĐƠN THANH TOÁN</h2>
+                                <p class="text-muted"><span t-esc="company.name or 'SALON BEAUTY'"/></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <strong>Mã hóa đơn:</strong> <span t-field="o.name"/>
+                        </div>
+                        <div class="col-6 text-right">
+                            <strong>Ngày lập:</strong> <span t-field="o.date_invoice" t-options="{'widget': 'datetime'}"/>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <strong>Khách hàng:</strong> <span t-field="o.customer_id.name"/>
+                            <br/>
+                            <span t-if="o.customer_id.phone">SĐT: <span t-field="o.customer_id.phone"/></span>
+                            <br/>
+                            <span t-if="o.customer_id.membership_rank_id">Hạng: <span t-field="o.customer_id.membership_rank_id.name"/></span>
+                        </div>
+                        <div class="col-6 text-right">
+                            <strong>Phương thức thanh toán:</strong>
+                            <span t-if="o.payment_method == 'cash'">Tiền mặt</span>
+                            <span t-if="o.payment_method == 'bank'">Chuyển khoản</span>
+                            <span t-if="o.payment_method == 'mixed'">Kết hợp</span>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Dịch vụ</th>
+                                        <th>Số lượng</th>
+                                        <th class="text-right">Đơn giá</th>
+                                        <th class="text-right">Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="line_index" t-value="0"/>
+                                    <t t-foreach="o.line_ids" t-as="line">
+                                        <tr>
+                                            <td><t t-esc="line_index + 1"/></td>
+                                            <td><span t-field="line.service_id.name"/></td>
+                                            <td class="text-center"><span t-field="line.quantity"/></td>
+                                            <td class="text-right">
+                                                <span t-field="line.price_unit"/>
+                                                <span t-esc="' ' + o.currency_id.symbol"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="line.subtotal"/>
+                                                <span t-esc="' ' + o.currency_id.symbol"/>
+                                            </td>
+                                        </tr>
+                                        <t t-set="line_index" t-value="line_index + 1"/>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-8"></div>
+                        <div class="col-4">
+                            <table class="table">
+                                <t t-set="subtotal" t-value="sum([line.subtotal for line in o.line_ids])"/>
+                                <tr>
+                                    <td><strong>Tổng tiền:</strong></td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.0f}'.format(subtotal)"/>
+                                        <span t-esc="' ' + o.currency_id.symbol"/>
+                                    </td>
+                                </tr>
+                                <tr t-if="o.discount > 0">
+                                    <td><strong>Chiết khấu (<span t-esc="o.discount"/>%):</strong></td>
+                                    <td class="text-right">
+                                        <span t-esc="'-{:,.0f}'.format(subtotal * o.discount / 100.0)"/>
+                                        <span t-esc="' ' + o.currency_id.symbol"/>
+                                    </td>
+                                </tr>
+                                <tr t-if="o.promotion_discount_amount > 0">
+                                    <td><strong>Giảm giá khuyến mãi:</strong></td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.0f}'.format(o.promotion_discount_amount)"/>
+                                        <span t-esc="' ' + o.currency_id.symbol"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tổng thanh toán:</strong></td>
+                                    <td class="text-right">
+                                        <strong>
+                                            <span t-esc="'{:,.0f}'.format(o.total_amount)"/>
+                                            <span t-esc="' ' + o.currency_id.symbol"/>
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-12 text-center">
+                            <p class="text-muted">Cảm ơn quý khách đã sử dụng dịch vụ!</p>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+    
+    <record id="action_report_salon_invoice" model="ir.actions.report">
+        <field name="name">Hóa đơn Salon</field>
+        <field name="model">salon.invoice</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">salon_tc_invoice_extend.report_salon_invoice</field>
+        <field name="report_file">salon_tc_invoice_extend.report_salon_invoice</field>
+        <field name="print_report_name">'Hóa đơn - %s' % (object.name)</field>
+    </record>
+    
+</odoo>

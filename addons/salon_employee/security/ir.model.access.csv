@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_salon_employee_user,salon.employee.user,salon_employee.model_salon_employee,base.group_user,0,0,0,0
+access_salon_employee_manager,salon.employee.manager,salon_employee.model_salon_employee,base.group_erp_manager,1,1,1,1
+access_salon_shift_user,salon.shift.user,salon_employee.model_salon_shift,base.group_user,1,1,1,0
+access_salon_shift_manager,salon.shift.manager,salon_employee.model_salon_shift,base.group_erp_manager,1,1,1,1
+

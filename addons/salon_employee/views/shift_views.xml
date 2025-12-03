@@ -1,0 +1,73 @@
+<odoo>
+    <record id="seq_salon_shift" model="ir.sequence">
+        <field name="name">Mã Ca Làm Việc</field>
+        <field name="code">salon.shift.sequence</field>
+        <field name="prefix">CA</field>
+        <field name="padding">4</field>
+    </record>
+
+    <record id="view_shift_form" model="ir.ui.view">
+        <field name="name">salon.shift.form</field>
+        <field name="model">salon.shift</field>
+        <field name="arch" type="xml">
+            <form string="Ca làm việc">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="ma_ca" readonly="1"/>
+                            <field name="ma_nv"/>
+                            <field name="ngay_lam_viec"/>
+                            <field name="gio_bat_dau" widget="float_time"/>
+                            <field name="gio_ket_thuc" widget="float_time"/>
+                            <field name="ghi_chu"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_shift_calendar" model="ir.ui.view">
+        <field name="name">salon.shift.calendar</field>
+        <field name="model">salon.shift</field>
+        <field name="arch" type="xml">
+            <calendar
+                string="Lịch Làm Việc Salon"
+                color="ma_nv"
+                date_start="ngay_gio_bat_dau"
+                date_stop="ngay_gio_ket_thuc"
+                mode="week"
+                create="true"
+                edit="true">
+            <field name="ma_nv"/>
+            <field name="ghi_chu"/>
+            <field name="ma_ca"/>
+            <field name="ngay_lam_viec"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_shift_tree" model="ir.ui.view">
+        <field name="name">salon.shift.tree</field>
+        <field name="model">salon.shift</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="ma_ca"/>
+                <field name="ma_nv"/>
+                <field name="ngay_lam_viec"/>
+                <field name="gio_bat_dau" widget="float_time"/>
+                <field name="gio_ket_thuc" widget="float_time"/>
+                <field name="ghi_chu"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_shift" model="ir.actions.act_window">
+        <field name="name">Ca làm việc</field>
+        <field name="res_model">salon.shift</field>
+        <field name="view_mode">calendar,list,form</field>
+        <field name="view_id" ref="view_shift_calendar"/>
+    </record>
+
+    <menuitem id="menu_shift_root" name="Ca làm việc" parent="salon_management.menu_salon_root" action="action_shift" sequence="7"/>
+</odoo>

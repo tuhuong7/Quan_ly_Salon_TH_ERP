@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_salon_service_search" model="ir.ui.view">
+        <field name="name">salon.service.search</field>
+        <field name="model">salon.service</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm dịch vụ">
+                <field name="name" string="Tên dịch vụ"/>
+                <field name="service_type" string="Loại dịch vụ"/>
+                <field name="status" string="Trạng thái"/>
+
+                <filter name="active" string="Đang hoạt động" domain="[('status','=','active')]"/>
+                <filter name="inactive" string="Ngưng hoạt động" domain="[('status','=','inactive')]"/>
+            </search>
+        </field>
+    </record>
+</odoo>
+

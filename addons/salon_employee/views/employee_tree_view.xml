@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_employee_tree" model="ir.ui.view">
+        <field name="name">salon.employee.tree</field>
+        <field name="model">salon.employee</field>
+        <field name="arch" type="xml">
+            <list string="Danh sách nhân viên" default_order="ten_nv asc">
+                <field name="ma_nv"/>
+                <field name="ten_nv"/>
+                <field name="gioi_tinh"/>
+                <field name="chuc_vu"/>
+                <field name="sdt"/>
+                <field name="ngay_sinh"/>
+
+                <button name="action_open_form_view" type="object" string="Xem" class="btn-link" icon="fa-eye"/>
+                <button name="action_open_edit" type="object" string="Sửa" class="btn-primary" icon="fa-pencil"/>
+                <button name="action_delete_record" type="object" string="Xóa" class="btn-danger" icon="fa-trash"/>
+            </list>
+        </field>
+    </record>
+</odoo>
+

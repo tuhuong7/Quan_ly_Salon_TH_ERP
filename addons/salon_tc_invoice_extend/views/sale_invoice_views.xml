@@ -1,0 +1,207 @@
+<odoo>
+    <record id="view_salon_invoice_search" model="ir.ui.view">
+        <field name="name">salon.invoice.search</field>
+        <field name="model">salon.invoice</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm hóa đơn">
+                <field name="name" string="Mã hóa đơn"/>
+                <field name="customer_id" string="Khách hàng"/>
+                <field name="employee_id" string="Nhân viên"/>
+                <field name="payment_method" string="Phương thức thanh toán"/>
+                <separator/>
+                <filter string="Nháp" name="draft" domain="[('state','=','draft')]"/>
+                <filter string="Đã thanh toán" name="paid" domain="[('state','=','paid')]"/>
+                <filter string="Đã hủy" name="cancel" domain="[('state','=','cancel')]"/>
+                <separator/>
+                <filter string="Tiền mặt" name="cash" domain="[('payment_method','=','cash')]"/>
+                <filter string="Chuyển khoản" name="bank" domain="[('payment_method','=','bank')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_salon_invoice_kanban" model="ir.ui.view">
+        <field name="name">salon.invoice.kanban</field>
+        <field name="model">salon.invoice</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column" create="1">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="total_amount"/>
+                <field name="currency_id"/>
+                <field name="payment_method"/>
+                <field name="state" options="{'no_create_edit': True}"/>
+                <field name="date_invoice"/>
+                <field name="employee_id"/>
+                <field name="promotion_id"/>
+                <progressbar field="state" colors='{"draft": "warning", "paid": "success", "cancel": "danger"}'/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                    <div class="o_kanban_record_subtitle">
+                                        <field name="customer_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <strong>
+                                            <field name="total_amount" widget="monetary" options="{'decimal_places': 0}"/>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-6">
+                                        <i class="fa fa-calendar"/> <field name="date_invoice" widget="datetime"/>
+                                    </div>
+                                    <div class="col-6">
+                                        <i class="fa fa-money"/> 
+                                        <t t-if="record.payment_method.raw_value == 'cash'">Tiền mặt</t>
+                                        <t t-if="record.payment_method.raw_value == 'bank'">Chuyển khoản</t>
+                                        <t t-if="record.payment_method.raw_value == 'mixed'">Kết hợp</t>
+                                    </div>
+                                </div>
+                                <t t-if="record.employee_id.raw_value">
+                                    <div class="row mt-2">
+                                        <div class="col-12">
+                                            <i class="fa fa-user"/> <field name="employee_id"/>
+                                        </div>
+                                    </div>
+                                </t>
+                                <t t-if="record.promotion_id.raw_value">
+                                    <div class="row mt-2">
+                                        <div class="col-12">
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-tag"/> <field name="promotion_id"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </t>
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <div class="btn-group" role="group">
+                                            <button name="action_open_payment_confirm_wizard" type="object" 
+                                                    class="btn btn-sm btn-primary" 
+                                                    invisible="state == 'paid'"
+                                                    string="Thanh toán"/>
+                                            <button name="action_cancel" type="object" 
+                                                    class="btn btn-sm btn-secondary" 
+                                                    invisible="state == 'cancel'"
+                                                    string="Hủy"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_salon_invoice_tree" model="ir.ui.view">
+        <field name="name">salon.invoice.tree</field>
+        <field name="model">salon.invoice</field>
+        <field name="arch" type="xml">
+            <list string="Danh sách hóa đơn" default_order="date_invoice desc">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="promotion_id" optional="show"/>
+                <field name="total_amount" widget="monetary" options="{'decimal_places': 0}"/>
+                <field name="currency_id" invisible="1" column_invisible="1"/>
+                <field name="payment_method"/>
+                <field name="state" widget="badge"
+                    decoration-success="state == 'paid'"
+                    decoration-muted="state == 'cancel'"/>
+                <field name="date_invoice" widget="datetime"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_salon_invoice_form" model="ir.ui.view">
+        <field name="name">salon.invoice.form</field>
+        <field name="model">salon.invoice</field>
+        <field name="arch" type="xml">
+            <form string="Hoá đơn">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="customer_id"/>
+                            <field name="appointment_id"/>
+                            <field name="employee_id" 
+                                invisible="appointment_id and appointment_id.employee_id"
+                                help="Tự động lấy từ appointment nếu có"/>
+                            <field name="payment_method"/>
+                            <field name="promotion_id" 
+                                domain="[('state', '=', 'active')]"
+                                options="{'no_create': True}"
+                                placeholder="Chọn khuyến mãi (nếu có)"/>
+                        </group>
+                        <group>
+                            <field name="customer_membership_rank_id" readonly="1" string="Hạng thành viên"/>
+                            <field name="discount" readonly="1" string="Chiết khấu từ hạng (%)" 
+                                help="Chiết khấu được tính từ hạng thành viên của khách hàng"/>
+                            <field name="promotion_discount_amount" readonly="1" widget="monetary" options="{'decimal_places': 0}"
+                                help="Giảm giá từ khuyến mãi đã chọn"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="total_amount" widget="monetary" options="{'decimal_places': 0}" readonly="1"/>
+                            <field name="state" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Thông tin khuyến mãi" invisible="not promotion_id">
+                        <field name="promotion_id" readonly="1" nolabel="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Chi tiết hoá đơn">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="service_id"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit" widget="monetary" options="{'decimal_places': 0}"/>
+                                    <field name="currency_id" invisible="1" column_invisible="1"/>
+                                    <field name="promotion_id" 
+                                           domain="[('state', '=', 'active')]"
+                                           options="{'no_create': True}"
+                                           placeholder="Chọn khuyến mãi (nếu có)"/>
+                                    <field name="line_promotion_discount_amount" widget="monetary" options="{'decimal_places': 0}" readonly="1"/>
+                                    <field name="subtotal" widget="monetary" options="{'decimal_places': 0}" readonly="1" sum="Tổng"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="action_open_payment_confirm_wizard" string="Thanh toán"
+                            type="object" class="btn-primary" invisible="state == 'paid'"/>
+                    <button name="action_print_invoice" string="In hóa đơn" type="object" 
+                            class="btn-primary" invisible="state != 'paid'"
+                            icon="fa-print"/>
+                    <button name="action_cancel" string="Huỷ" type="object" class="btn-secondary" invisible="state == 'cancel'"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_salon_invoice" model="ir.actions.act_window">
+        <field name="name">Hoá đơn</field>
+        <field name="res_model">salon.invoice</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_salon_invoice_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo hóa đơn mới cho khách hàng.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_salon_invoice" name="Hoá đơn &amp; Thanh toán"
+            parent="salon_management.menu_salon_root"
+            action="action_salon_invoice"
+            sequence="1"/>
+</odoo>

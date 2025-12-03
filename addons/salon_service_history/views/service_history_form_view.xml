@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="view_salon_service_history_form" model="ir.ui.view">
+    <field name="name">salon.service.history.form</field>
+    <field name="model">salon.service.history</field>
+    <field name="arch" type="xml">
+      <form string="Lịch sử dịch vụ">
+        <sheet>
+          <group>
+            <group>
+              <field name="customer_id" readonly="1"/>
+              <field name="date"/>
+              <field name="service_id"/>
+              <field name="staff_id"/>
+            </group>
+            <group>
+              <field name="invoice_name" readonly="1"/>
+              <button name="action_open_invoice" string="Mở hóa đơn" type="object" 
+                      class="btn-secondary" invisible="not invoice_name"
+                      icon="fa-file-invoice"/>
+              <field name="amount" widget="monetary" options="{'decimal_places': 0}"/>
+              <field name="currency_id" invisible="1"/>
+              <field name="notes"/>
+            </group>
+          </group>
+
+        </sheet>
+      </form>
+    </field>
+  </record>
+</odoo>
+

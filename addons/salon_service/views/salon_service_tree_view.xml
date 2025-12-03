@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_salon_service_tree" model="ir.ui.view">
+        <field name="name">salon.service.tree</field>
+        <field name="model">salon.service</field>
+        <field name="arch" type="xml">
+            <list string="Danh sách dịch vụ">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="service_type"/>
+                <field name="duration"/>
+                <field name="price"/>
+                <field name="status"/>
+            </list>
+        </field>
+    </record>
+</odoo>
+

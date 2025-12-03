@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_promotion_search" model="ir.ui.view">
+        <field name="name">salon.promotion.search</field>
+        <field name="model">salon.promotion</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm khuyến mãi">
+                <field name="name" string="Tên khuyến mãi"/>
+                <field name="code" string="Mã khuyến mãi"/>
+                <separator/>
+                <filter string="Đang áp dụng" name="active" domain="[('state', '=', 'active')]"/>
+                <filter string="Hết hạn" name="expired" domain="[('state', '=', 'expired')]"/>
+                <filter string="Nháp" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Đã hủy" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+            </search>
+        </field>
+    </record>
+</odoo>
+

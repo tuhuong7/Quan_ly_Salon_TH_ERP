@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_salon_service_user,salon.service.user,salon_service.model_salon_service,base.group_user,1,0,0,0
+access_salon_service_manager,salon.service.manager,salon_service.model_salon_service,base.group_erp_manager,1,1,1,1

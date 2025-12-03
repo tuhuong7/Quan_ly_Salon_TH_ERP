@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_salon_appointment_tree" model="ir.ui.view">
+        <field name="name">salon.appointment.tree</field>
+        <field name="model">salon.appointment</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code"/>
+                <field name="customer_id"/>
+                <field name="phone"/>
+                <field name="date_appointment"/>
+                <field name="arrival_time"/>
+                <field name="service_ids" widget="many2many_tags"/>
+                <field name="employee_id"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+</odoo>
+

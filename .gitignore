@@ -1,0 +1,55 @@
+# Python
+*.py[co]
+__pycache__/
+*.egg-info
+*.egg
+
+# Virtual environment
+venv/
+env/
+.venv
+
+# Odoo specific
+odoo/filestore
+*.log
+*.pot
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Odoo core và các module mặc định (loại trừ salon modules)
+odoo/
+debian/
+doc/
+setup/
+requirements.txt
+setup.py
+setup.cfg
+ruff.toml
+odoo-bin
+odoo.conf
+
+# Loại trừ tất cả module trong addons, CHỈ GIỮ LẠI salon modules
+addons/*
+!addons/salon_*
+!addons/.gitkeep
+
+# Giữ lại các file cần thiết ở root
+!.gitignore
+!.github
+!.mailmap
+!.weblate.json
+!README.md
+
+# Filestore và screenshots (đã chuyển sang tương đối trong odoo.conf)
+filestore/
+screenshots/
+

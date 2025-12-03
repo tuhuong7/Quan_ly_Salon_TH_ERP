@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="view_salon_service_history_tree" model="ir.ui.view">
+    <field name="name">salon.service.history.tree</field>
+    <field name="model">salon.service.history</field>
+    <field name="arch" type="xml">
+        <list string="Lịch sử dịch vụ" default_order="date desc">
+          <field name="date" string="Ngày thực hiện" widget="datetime"/>
+          <field name="customer_id" string="Khách hàng"/>
+          <field name="service_id" string="Dịch vụ"/>
+          <field name="staff_id" string="Nhân viên"/>
+          <field name="amount" string="Chi phí" widget="monetary" options="{'decimal_places': 0}" sum="Tổng"/>
+          <field name="currency_id" invisible="1" column_invisible="1"/>
+          <field name="invoice_name" string="Mã hóa đơn" optional="show"/>
+          <field name="notes" string="Ghi chú"/>
+        </list>
+    </field>
+  </record>
+</odoo>
+

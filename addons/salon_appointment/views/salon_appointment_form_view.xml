@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_salon_appointment_form" model="ir.ui.view">
+        <field name="name">salon.appointment.form</field>
+        <field name="model">salon.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Lịch Hẹn Salon">
+                <header>
+                    <button name="action_confirm" string="Xác nhận" type="object"
+                            class="btn-info"
+                            invisible="state != 'pending'"/>
+                    <button name="action_start" string="Bắt đầu" type="object"
+                            class="btn-primary"
+                            invisible="state not in ['pending', 'confirmed']"/>
+                    <button name="action_done" string="Hoàn tất" type="object"
+                            class="btn-success" invisible="state != 'processing'"/>
+                    <button name="action_create_invoice" string="Tạo hóa đơn" type="object"
+                            class="btn-info" invisible="state != 'done'"/>
+                    <button name="action_cancel" string="Huỷ" type="object"
+                            class="btn-danger"
+                            invisible="state in ['done', 'cancel']"/>
+                    <field name="state" widget="statusbar" statusbar_visible="pending,confirmed,processing,done,cancel"/>
+                </header>
+
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="code" readonly="1" required="0"/>
+                            <field name="customer_id" 
+                                options="{'no_create': False, 'no_create_edit': False}"/>
+                            <field name="phone"/>
+                            <field name="employee_id"/>
+                        </group>
+                        <group>
+                            <field name="date_appointment"/>
+                            <field name="arrival_time"/>
+                            <field name="duration"/>
+                            <field name="note"/>
+                            <field name="cancel_reason" invisible="state != 'cancel'"
+                                readonly="1" 
+                                placeholder="Lý do hủy lịch hẹn..."/>
+                        </group>
+                    </group>
+                    <group string="Dịch vụ" col="1">
+                        <field name="service_ids" nolabel="1">
+                            <list editable="bottom" default_order="sequence" class="o_list_view">
+                                <field name="sequence" widget="handle" optional="hide" width="30"/>
+                                <field name="service_id" required="1" string="Dịch vụ" options="{'no_create': True}" column_invisible="0"/>
+                                <field name="quantity" default="1" string="Số lượng" width="100"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
+
