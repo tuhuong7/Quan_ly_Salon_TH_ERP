@@ -63,9 +63,18 @@ class Promotion(models.Model):
     
     def action_activate(self):
         """Kích hoạt khuyến mãi"""
-        self.write({"active": True})
+        today = date.today()
+        for rec in self:
+            if rec.state == 'draft':
+                rec.write({"active": True})
+                if rec.date_start > today:
+                    rec.date_start = today
+                if rec.date_end < today:
+                    rec.date_end = today
+                rec._compute_state()
     
     def action_cancel(self):
         """Hủy khuyến mãi"""
         self.write({"active": False})
+        self._compute_state()
 
