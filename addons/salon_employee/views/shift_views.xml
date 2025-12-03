@@ -16,9 +16,8 @@
                         <group>
                             <field name="ma_ca" readonly="1"/>
                             <field name="ma_nv"/>
-                            <field name="ngay_lam_viec"/>
-                            <field name="gio_bat_dau" widget="float_time"/>
-                            <field name="gio_ket_thuc" widget="float_time"/>
+                            <field name="ngay_gio_bat_dau" widget="datetime"/>
+                            <field name="ngay_gio_ket_thuc" widget="datetime"/>
                             <field name="ghi_chu"/>
                         </group>
                     </group>
@@ -41,8 +40,6 @@
                 edit="true">
             <field name="ma_nv"/>
             <field name="ghi_chu"/>
-            <field name="ma_ca"/>
-            <field name="ngay_lam_viec"/>
             </calendar>
         </field>
     </record>
@@ -54,9 +51,8 @@
             <list>
                 <field name="ma_ca"/>
                 <field name="ma_nv"/>
-                <field name="ngay_lam_viec"/>
-                <field name="gio_bat_dau" widget="float_time"/>
-                <field name="gio_ket_thuc" widget="float_time"/>
+                <field name="ngay_gio_bat_dau" widget="datetime"/>
+                <field name="ngay_gio_ket_thuc" widget="datetime"/>
                 <field name="ghi_chu"/>
             </list>
         </field>

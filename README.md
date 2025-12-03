@@ -80,7 +80,6 @@ addons/
 │   │           └── salon_shift_calendar.js
 │   └── views/
 │       ├── assets.xml
-│       ├── employee_kanban_view.xml
 │       ├── employee_form_view.xml
 │       ├── employee_tree_view.xml
 │       ├── employee_search_view.xml

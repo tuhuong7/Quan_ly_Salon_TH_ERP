@@ -57,10 +57,10 @@
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-6">
-                                        <i class="fa fa-calendar"/> <field name="date_invoice" widget="datetime"/>
+                                        <i class="fa fa-calendar" title="Ngày hóa đơn"/> <field name="date_invoice" widget="datetime"/>
                                     </div>
                                     <div class="col-6">
-                                        <i class="fa fa-money"/> 
+                                        <i class="fa fa-money" title="Phương thức thanh toán"/> 
                                         <t t-if="record.payment_method.raw_value == 'cash'">Tiền mặt</t>
                                         <t t-if="record.payment_method.raw_value == 'bank'">Chuyển khoản</t>
                                         <t t-if="record.payment_method.raw_value == 'mixed'">Kết hợp</t>
@@ -69,7 +69,7 @@
                                 <t t-if="record.employee_id.raw_value">
                                     <div class="row mt-2">
                                         <div class="col-12">
-                                            <i class="fa fa-user"/> <field name="employee_id"/>
+                                            <i class="fa fa-user" title="Nhân viên"/> <field name="employee_id"/>
                                         </div>
                                     </div>
                                 </t>
@@ -77,7 +77,7 @@
                                     <div class="row mt-2">
                                         <div class="col-12">
                                             <span class="badge badge-info">
-                                                <i class="fa fa-tag"/> <field name="promotion_id"/>
+                                                <i class="fa fa-tag" title="Khuyến mãi"/> <field name="promotion_id"/>
                                             </span>
                                         </div>
                                     </div>

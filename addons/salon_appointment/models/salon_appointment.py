@@ -309,30 +309,45 @@ class SalonAppointment(models.Model):
     @api.onchange('date_appointment', 'duration')
     def _onchange_date_appointment(self):
         """Filter employee theo ca làm việc khi chọn ngày giờ"""
-        if not self.date_appointment or not self.duration:
+        if not self.date_appointment:
             return {'domain': {'employee_id': []}}
         
         start_time = self.date_appointment
-        end_time = start_time + timedelta(hours=self.duration)
         appointment_date = start_time.date()
+        appointment_hour = start_time.hour + start_time.minute / 60.0
         
         shifts = self.env['salon.shift'].search([
             ('ngay_lam_viec', '=', appointment_date),
         ])
         
         valid_employee_ids = []
-        for shift in shifts:
-            if shift.ngay_gio_bat_dau and shift.ngay_gio_ket_thuc:
-                if shift.ngay_gio_bat_dau <= start_time and shift.ngay_gio_ket_thuc >= end_time:
-                    if shift.ma_nv.id not in valid_employee_ids:
-                        valid_employee_ids.append(shift.ma_nv.id)
+        
+        if self.duration:
+            end_time = start_time + timedelta(hours=self.duration)
+            for shift in shifts:
+                if shift.ngay_gio_bat_dau and shift.ngay_gio_ket_thuc:
+                    if shift.ngay_gio_bat_dau <= start_time and shift.ngay_gio_ket_thuc >= end_time:
+                        if shift.ma_nv.id not in valid_employee_ids:
+                            valid_employee_ids.append(shift.ma_nv.id)
+        else:
+            for shift in shifts:
+                if shift.gio_bat_dau is not False and shift.gio_ket_thuc is not False:
+                    if shift.gio_bat_dau <= appointment_hour < shift.gio_ket_thuc:
+                        if shift.ma_nv.id not in valid_employee_ids:
+                            valid_employee_ids.append(shift.ma_nv.id)
         
         if valid_employee_ids:
+            message = f'Đã lọc {len(valid_employee_ids)} nhân viên có ca làm việc'
+            if self.duration:
+                message += ' trong khung giờ này.'
+            else:
+                message += f' tại giờ {int(appointment_hour):02d}:{int((appointment_hour % 1) * 60):02d}.'
+            
             return {
                 'domain': {'employee_id': [('id', 'in', valid_employee_ids)]},
                 'warning': {
                     'title': 'Lưu ý',
-                    'message': f'Đã lọc {len(valid_employee_ids)} nhân viên có ca làm việc trong khung giờ này.'
+                    'message': message
                 }
             }
         else:

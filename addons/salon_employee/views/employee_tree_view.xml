@@ -12,7 +12,6 @@
                 <field name="sdt"/>
                 <field name="ngay_sinh"/>
 
-                <button name="action_open_form_view" type="object" string="Xem" class="btn-link" icon="fa-eye"/>
                 <button name="action_open_edit" type="object" string="Sửa" class="btn-primary" icon="fa-pencil"/>
                 <button name="action_delete_record" type="object" string="Xóa" class="btn-danger" icon="fa-trash"/>
             </list>

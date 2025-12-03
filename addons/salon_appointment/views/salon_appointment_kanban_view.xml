@@ -32,16 +32,16 @@
                             <div class="o_kanban_record_body">
                                 <div class="row">
                                     <div class="col-6">
-                                        <i class="fa fa-phone"/> <field name="phone"/>
+                                        <i class="fa fa-phone" title="Số điện thoại"/> <field name="phone"/>
                                     </div>
                                     <div class="col-6">
-                                        <i class="fa fa-user"/> <field name="employee_id"/>
+                                        <i class="fa fa-user" title="Nhân viên"/> <field name="employee_id"/>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-12">
                                         <div style="display: flex; align-items: center;">
-                                            <i class="fa fa-calendar" style="margin-right: 8px;"/>
+                                            <i class="fa fa-calendar" style="margin-right: 8px;" title="Ngày giờ hẹn"/>
                                             <field name="date_appointment" widget="datetime" nolabel="1"/>
                                         </div>
                                     </div>
@@ -49,7 +49,7 @@
                                 <t t-if="record.service_names.raw_value">
                                     <div class="row mt-2">
                                         <div class="col-12">
-                                            <i class="fa fa-scissors" style="margin-right: 8px;"/>
+                                            <i class="fa fa-scissors" style="margin-right: 8px;" title="Dịch vụ"/>
                                             <field name="service_names" nolabel="1"/>
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                 <t t-if="record.note.raw_value">
                                     <div class="row mt-2">
                                         <div class="col-12">
-                                            <i class="fa fa-comment"/> <field name="note"/>
+                                            <i class="fa fa-comment" title="Ghi chú"/> <field name="note"/>
                                         </div>
                                     </div>
                                 </t>
