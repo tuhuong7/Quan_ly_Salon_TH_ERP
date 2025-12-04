@@ -1,6 +1,6 @@
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 
 class SalonAppointment(models.Model):
@@ -17,6 +17,13 @@ class SalonAppointment(models.Model):
     customer_id = fields.Many2one('salon.customer', string="Khách Hàng", required=True)
     phone = fields.Char(string="Số Điện Thoại", related="customer_id.phone", store=True, readonly=True)
     employee_id = fields.Many2one('salon.employee', string="Stylist", required=True)
+    valid_employee_ids = fields.Many2many(
+        'salon.employee',
+        string="Nhân viên hợp lệ",
+        compute="_compute_valid_employees",
+        store=False,
+        help="Danh sách nhân viên có ca làm việc trong thời gian đặt lịch"
+    )
     service_ids = fields.One2many('salon.appointment.service', 'appointment_id', string="Dịch Vụ", required=True)
     service_names = fields.Char(
         string="Tên dịch vụ",
@@ -30,7 +37,13 @@ class SalonAppointment(models.Model):
         store=False,
         help="Danh sách dịch vụ phân cách bằng || để hiển thị trong kanban"
     )
-    duration = fields.Float(string="Thời Lượng (Giờ)", default=1.0, required=True)
+    duration = fields.Float(
+        string="Thời Lượng (Giờ)", 
+        compute="_compute_duration",
+        store=True,
+        readonly=True,
+        help="Thời lượng tự động tính từ tổng thời gian của các dịch vụ"
+    )
     date_appointment = fields.Datetime(string="Ngày Giờ Hẹn", required=True)
     arrival_time = fields.Datetime(string="Giờ Khách Đến")
     note = fields.Text(string="Ghi Chú")
@@ -306,6 +319,48 @@ class SalonAppointment(models.Model):
             else:
                 rec.service_list = ""
 
+    @api.depends('service_ids', 'service_ids.service_id', 'service_ids.service_id.duration', 'service_ids.quantity')
+    def _compute_duration(self):
+        """Tính thời lượng tự động từ tổng thời gian của các dịch vụ"""
+        for rec in self:
+            total_minutes = 0
+            if rec.service_ids:
+                for line in rec.service_ids:
+                    if line.service_id and line.service_id.duration:
+                        total_minutes += line.service_id.duration * (line.quantity or 1)
+            rec.duration = round(total_minutes / 60.0, 2) if total_minutes > 0 else 0.0
+
+    @api.depends('date_appointment', 'duration')
+    def _compute_valid_employees(self):
+        """Tính toán danh sách nhân viên có ca làm việc trong thời gian đặt lịch"""
+        for rec in self:
+            if not rec.date_appointment:
+                rec.valid_employee_ids = False
+                continue
+            
+            start_time = rec.date_appointment
+            shifts = self.env['salon.shift'].search([
+                ('ngay_gio_bat_dau', '!=', False),
+                ('ngay_gio_ket_thuc', '!=', False),
+                ('ma_nv', '!=', False),
+            ])
+            
+            valid_employee_ids = []
+            
+            if rec.duration and rec.duration > 0:
+                end_time = start_time + timedelta(hours=rec.duration)
+                for shift in shifts:
+                    if shift.ngay_gio_bat_dau <= start_time and shift.ngay_gio_ket_thuc >= end_time:
+                        if shift.ma_nv.id not in valid_employee_ids:
+                            valid_employee_ids.append(shift.ma_nv.id)
+            else:
+                for shift in shifts:
+                    if shift.ngay_gio_bat_dau <= start_time < shift.ngay_gio_ket_thuc:
+                        if shift.ma_nv.id not in valid_employee_ids:
+                            valid_employee_ids.append(shift.ma_nv.id)
+            
+            rec.valid_employee_ids = valid_employee_ids
+
     @api.onchange('date_appointment', 'duration')
     def _onchange_date_appointment(self):
         """Filter employee theo ca làm việc khi chọn ngày giờ"""
@@ -313,43 +368,49 @@ class SalonAppointment(models.Model):
             return {'domain': {'employee_id': []}}
         
         start_time = self.date_appointment
-        appointment_date = start_time.date()
-        appointment_hour = start_time.hour + start_time.minute / 60.0
         
         shifts = self.env['salon.shift'].search([
-            ('ngay_lam_viec', '=', appointment_date),
+            ('ngay_gio_bat_dau', '!=', False),
+            ('ngay_gio_ket_thuc', '!=', False),
+            ('ma_nv', '!=', False),
         ])
         
         valid_employee_ids = []
         
-        if self.duration:
+        if self.duration and self.duration > 0:
             end_time = start_time + timedelta(hours=self.duration)
             for shift in shifts:
-                if shift.ngay_gio_bat_dau and shift.ngay_gio_ket_thuc:
-                    if shift.ngay_gio_bat_dau <= start_time and shift.ngay_gio_ket_thuc >= end_time:
-                        if shift.ma_nv.id not in valid_employee_ids:
-                            valid_employee_ids.append(shift.ma_nv.id)
+                if shift.ngay_gio_bat_dau <= start_time and shift.ngay_gio_ket_thuc >= end_time:
+                    if shift.ma_nv.id not in valid_employee_ids:
+                        valid_employee_ids.append(shift.ma_nv.id)
         else:
             for shift in shifts:
-                if shift.gio_bat_dau is not False and shift.gio_ket_thuc is not False:
-                    if shift.gio_bat_dau <= appointment_hour < shift.gio_ket_thuc:
-                        if shift.ma_nv.id not in valid_employee_ids:
-                            valid_employee_ids.append(shift.ma_nv.id)
+                if shift.ngay_gio_bat_dau <= start_time < shift.ngay_gio_ket_thuc:
+                    if shift.ma_nv.id not in valid_employee_ids:
+                        valid_employee_ids.append(shift.ma_nv.id)
         
         if valid_employee_ids:
             message = f'Đã lọc {len(valid_employee_ids)} nhân viên có ca làm việc'
-            if self.duration:
+            if self.duration and self.duration > 0:
                 message += ' trong khung giờ này.'
             else:
-                message += f' tại giờ {int(appointment_hour):02d}:{int((appointment_hour % 1) * 60):02d}.'
+                start_time_tz = fields.Datetime.context_timestamp(self, start_time)
+                start_hour = start_time_tz.hour
+                start_minute = start_time_tz.minute
+                message += f' tại giờ {start_hour:02d}:{start_minute:02d}.'
             
-            return {
+            result = {
                 'domain': {'employee_id': [('id', 'in', valid_employee_ids)]},
                 'warning': {
                     'title': 'Lưu ý',
                     'message': message
                 }
             }
+            
+            if self.employee_id and self.employee_id.id not in valid_employee_ids:
+                result['value'] = {'employee_id': False}
+            
+            return result
         else:
             return {
                 'domain': {'employee_id': []},

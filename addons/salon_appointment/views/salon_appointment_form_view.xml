@@ -29,7 +29,9 @@
                             <field name="customer_id" 
                                 options="{'no_create': False, 'no_create_edit': False}"/>
                             <field name="phone"/>
-                            <field name="employee_id"/>
+                            <field name="employee_id" 
+                                domain="[('id', 'in', valid_employee_ids)]"
+                                options="{'no_create': True, 'no_open': True}"/>
                         </group>
                         <group>
                             <field name="date_appointment"/>
